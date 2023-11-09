@@ -1,0 +1,13 @@
+faq.html seems to be related to "module reclamation"( place for showcasing what articult is about via some ordinary questions that are already answered, u can see them one u click the associated arrow.
+
+contact.html is showcases articult info, and it allows submitting a form for contact purposes and to submit a certain meassge, acomplaint or otherwise through the text space
+
+product-detail.html is a page that showcases description, and purchase option of a selected item as well as some recommendations below
+
+products.html,a page for ingallery items with means to organize the items, example new arrivals(to classify in accordance to date) popular( in accordance to item viewer frequency)
+
+sign-in html, for user authentification, and profile creation via "create one" link below the form
+
+index.html could be used as front page as through the links on the top bar, refers to all other pages
+
+about.html includes involved parties with a description as well as social media contacts below
