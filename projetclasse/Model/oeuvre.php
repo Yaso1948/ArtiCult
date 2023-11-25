@@ -1,5 +1,5 @@
 <?php
-class piecedoeuvre
+class Piecedoeuvre
 {
     private ?int $id_piece_doeuvre = null;
     private ?string $titre = null;
@@ -11,128 +11,133 @@ class piecedoeuvre
     private ?int $poids = null;
     private ?string $image = null;
     private ?int $category = null;
-    public function __construct($id_piece_doeuvre = null,$titre,$proprietaire,$description )
-    {
+
+    public function __construct(
+        $id_piece_doeuvre = null,
+        $titre,
+        $proprietaire,
+        $description,
+        $prix,
+        $support,
+        $etat,
+        $poids,
+        $image,
+        $category
+    ) {
         $this->id_piece_doeuvre = $id_piece_doeuvre;
         $this->titre = $titre;
         $this->proprietaire = $proprietaire;
-        $this->edescription = $description;
+        $this->description = $description;
+        $this->prix = $prix;
         $this->support = $support;
-        $this->etat= $$etat;
+        $this->etat = $etat;
         $this->poids = $poids;
         $this->image = $image;
         $this->category = $category;
-       
     }
 
-
-    public function getidoeuvre()
+    public function getIdPieceDoeuvre()
     {
         return $this->id_piece_doeuvre;
     }
 
-
-    public function gettitre()
+    public function getTitre()
     {
         return $this->titre;
     }
 
-
-    public function settitre($titre)
+    public function setTitre($titre)
     {
         $this->titre = $titre;
-
         return $this;
     }
 
-
-    public function getproprietaire()
+    public function getProprietaire()
     {
         return $this->proprietaire;
     }
 
-
-    public function setproprietaire($proprietaire)
+    public function setProprietaire($proprietaire)
     {
         $this->proprietaire = $proprietaire;
-
         return $this;
     }
 
-
-    public function getdescription()
+    public function getDescription()
     {
         return $this->description;
     }
 
-
-    public function setdescription($description)
+    public function setDescription($description)
     {
         $this->description = $description;
-
         return $this;
     }
 
+    public function getPrix()
+    {
+        return $this->prix;
+    }
 
-    public function getsupport()
+    public function setPrix($prix)
+    {
+        $this->prix = $prix;
+        return $this;
+    }
+
+    public function getSupport()
     {
         return $this->support;
     }
 
-
-    public function setsupport($support)
+    public function setSupport($support)
     {
         $this->support = $support;
-
         return $this;
     }
-    public function getetat()
+
+    public function getEtat()
     {
         return $this->etat;
     }
 
-
-    public function setetat($etat)
+    public function setEtat($etat)
     {
         $this->etat = $etat;
-
         return $this;
     }
-    public function getpoids()
+
+    public function getPoids()
     {
         return $this->poids;
     }
 
-
-    public function setpoids($poids)
+    public function setPoids($poids)
     {
         $this->poids = $poids;
-
         return $this;
     }
-    public function getimage()
+
+    public function getImage()
     {
         return $this->image;
     }
 
-
-    public function setimage($image)
+    public function setImage($image)
     {
         $this->image = $image;
-
         return $this;
     }
-    public function getcategory()
+
+    public function getCategory()
     {
         return $this->category;
     }
 
-
-    public function setcategory($category)
+    public function setCategory($category)
     {
         $this->category = $category;
-
         return $this;
     }
-
 }
+?>

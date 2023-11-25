@@ -1,102 +1,124 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Liste des oeuvre</title>
-    <!-- Any necessary styling or meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des œuvres</title>
     <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: white;
-        color: black;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-    }
+          body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: lightgrey ; /* Ajout de la couleur de fond grise */
+        }
 
-    h1 {
-        text-align: center;
-        color: teal; /* Blue-green color */
-    }
+        h1 {
+            text-align: center;
+            color: #4a4a4a;
+            margin-bottom: 20px;
+        }
 
-    table {
-        width: 80%;
-        border-collapse: collapse;
-        margin: 20px 0;
-        background-color: silver; /* Silver color */
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
 
-    th, td {
-        padding: 10px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
 
-    th {
-        background-color: teal; /* Blue-green color */
-        color: white;
-    }
+        th {
+            background-color: #333;
+            color: #fff;
+        }
 
-    tr:hover {
-        background-color: #f5f5f5;
-    }
+        td img {
+            max-width: 100px;
+            height: auto;
+            border-radius: 4px;
+        }
 
-    a {
-        text-decoration: none;
-        color: #007BFF; /* Blue color */
-    }
+        button {
+            background-color: #4a4a4a;
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+            transition: background-color 0.3s;
+        }
 
-    a:hover {
-        text-decoration: underline;
-    }
-</style>
+        button:hover {
+            background-color: #333;
+        }
+    </style>
 </head>
 <body>
-    <h1>Liste des oeuvres</h1><header><img src="..\asset\logo.png" alt="Logo" width="150" height="150"></header>
+    <h1>Liste des œuvres</h1>
+
+    <header><img src="..\asset\logo.png" alt="Logo" width="150" height="150"></header>
+    
     <table border="1">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>titre</th>
-                <th>proprietaire</th>
-                <th>description</th>
-                <th>prix</th>
-                <th>support</th>
-                <th>etat</th>
-                <th>poids</th>
-                <th>image</th>
-                <th>category</th>
-              
+                <th>Titre</th>
+                <th>Propriétaire</th>
+                <th>Description</th>
+                <th>Prix</th>
+                <th>Support</th>
+                <th>État</th>
+                <th>Poids</th>
+                <th>Image</th>
+                <th>Category</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <?php
-            require_once('../Controller/oeuvreC.php');
+            require_once('../controller/oeuvreC.php');
             $controller = new oeuvreC();
-            $oeuvres = $controller->listoeuvre();
+            $oeuvres = $controller->listOeuvre();
 
             foreach ($oeuvres as $oeuvre) {
                 echo "<tr>";
-                echo "<td>" . $oeuvre['id_piece_doeuvre'] . "</td>";
-                echo "<td>" . $oeuvre['titre'] . "</td>";
-                echo "<td>" . $oeuvre['proprietaire'] . "</td>";
-                echo "<td>" . $oeuvre['description'] . "</td>";
-                echo "<td>" . $oeuvre['prix'] . "</td>";
-                echo "<td>" . $oeuvre['support'] . "</td>";
-                echo "<td>" . $oeuvre['etat'] . "</td>";
-                echo "<td>" . $oeuvre['poids'] . "</td>";
-                echo "<td>" . $oeuvre['image'] . "</td>";
-                echo "<td>" . $oeuvre['category'] . "</td>";
-                echo "<td><a href='../View/deleteOeuvre.php?id=" . $oeuvre['id_piece_doeuvre'] ."'>Supprimer</a></td>";
-                echo "<td><a href='../View/updateoeuvre.php?id=" . $oeuvre['id_piece_doeuvre'] . "'>Modifier</a></td>";
-
+                echo "<td>" . htmlspecialchars($oeuvre['id_piece_doeuvre']) . "</td>";
+                echo "<td>" . htmlspecialchars($oeuvre['titre']) . "</td>";
+                echo "<td>" . htmlspecialchars($oeuvre['proprietaire']) . "</td>";
+                echo "<td>" . htmlspecialchars($oeuvre['description']) . "</td>";
+                echo "<td>" . htmlspecialchars($oeuvre['prix']) . "</td>";
+                echo "<td>" . htmlspecialchars($oeuvre['support']) . "</td>";
+                echo "<td>" . htmlspecialchars($oeuvre['etat']) . "</td>";
+                echo "<td>" . htmlspecialchars($oeuvre['poids']) . "</td>";
+                echo "<td><img src='" . htmlspecialchars($oeuvre['image']) . "' alt='Image de l'oeuvre' width='100'></td>";
+                echo "<td>" . htmlspecialchars($oeuvre['category']) . "</td>"; // Correction ici
+               
+                echo "<td>";
+                echo "<form method='post' action='../View/deleteOeuvre.php' onsubmit='return confirmDelete(\"" . htmlspecialchars($oeuvre['id_piece_doeuvre']) . "\")'>";
+                echo "<input type='hidden' name='id' value=''>";
+                echo "<button type='submit' name='delete' value='" . htmlspecialchars($oeuvre['id_piece_doeuvre']) . "'>Supprimer</button>";
+                echo "</form>";
+                echo "<form method='get' action='../View/updateoeuvre.php'>";
+                echo "<input type='hidden' name='id' value='" . htmlspecialchars($oeuvre['id_piece_doeuvre']) . "'>";
+                echo "<button type='submit'>Modifier</button>";
+                echo "</form>";
+                echo "<form method='get' action='../View/recherche.php'>";
+                echo "<input type='hidden' name='id' value='" . htmlspecialchars($oeuvre['category']) . "'>";
+                echo "<button type='submit'>Recherche</button>";
+                echo "</form>";
+                echo "</td>";
                
                 echo "</tr>";
             }
-            
             ?>
         </tbody>
     </table>
