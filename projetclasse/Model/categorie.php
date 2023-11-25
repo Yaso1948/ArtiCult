@@ -1,5 +1,5 @@
 <?php
-class categorie {
+class Categorie {
     private $id_category;
     private $type_oeuvre;
 
@@ -15,7 +15,7 @@ class categorie {
     }
 
     // Méthode pour obtenir le type de la catégorie
-    public function getTypeCategorie() {
+    public function getTypeOeuvre() {
         return $this->type_oeuvre;
     }
 }

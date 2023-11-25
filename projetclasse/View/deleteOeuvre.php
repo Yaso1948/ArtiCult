@@ -1,22 +1,34 @@
 <?php
-if (isset($_GET['id'])) {
-    // Sanitize input
-    $id_piece_doeuvre = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-    
-    require_once '../controller/oeuvreC.php';
+// Vérifie si l'ID de la pièce d'œuvre est passé en paramètre dans l'URL
+if (isset($_POST['delete'])) {
 
-    $oeuvrecontroller = new oeuvreC();
+    // Sanitise l'entrée pour éviter les attaques par injection
+    $id_piece_doeuvre = filter_input(INPUT_POST, 'delete', FILTER_SANITIZE_NUMBER_INT);
 
-    if ($oeuvrecontroller->deleteoeuvre($id_piece_doeuvre)) {
-        // Redirect on success
-        header("Location: listeoeuvre.php"); 
-        exit();
-    } else {
-        // Display an error message
-        echo "Error";
-    }
-}else {
-    echo "art ID not specified.";
-    exit(); // Exit to avoid further execution
+
+if ($id_piece_doeuvre === false || $id_piece_doeuvre === null) {
+    // Gestion de l'erreur si la validation échoue
+    echo "Invalid ID format.";
+    exit();
+}
+
+require_once '../controller/oeuvreC.php';
+
+$oeuvrecontroller = new oeuvreC();
+
+// Vérifie si la pièce d'œuvre a été supprimée avec succès
+if ($oeuvrecontroller->deleteOeuvre($id_piece_doeuvre)) {
+    // Redirige en cas de succès
+    header("Location: listeoeuvre.php"); 
+    exit();
+} else {
+    // Affiche un message d'erreur en cas d'échec de la suppression
+    echo "Error deleting the art piece. Debug info: " . $oeuvrecontroller->getLastError();
+}
+
+} else {
+    // Affiche un message si l'ID de l'œuvre n'est pas spécifié
+    echo "Art ID not specified.";
+    exit(); // Arrête l'exécution pour éviter toute autre exécution
 }
 ?>

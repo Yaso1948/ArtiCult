@@ -1,33 +1,50 @@
 <?php
-require_once('../config.php');
 
-class categorieC
-{
-    public function affichercategorie($id_categorie)
-    {
-         try {
-            $pdo = config::getConnexion();
-            $query= $pdo->prepare("SELECT * FROM piecedoeuvre WHERE category =:id");
-            $query->execute(['id' => $id_categorie]);
-            return $query->fetchAll();
-        } catch (POOException e) {
-            echo $e->getMessage();
-        }
-    
-    }
-    public function affichercategorie() {
-        try{
-            $pdo config::getConnexion();
-         $query=$pdo->prepare("SELECT FROM category"); 
-        $query->execute(); 
-        return $query->fetchAll();
-        }
-        catch (PDOException Se) {
-        
-         echo $e->getMessage();
+require_once('../config.php'); // Assurez-vous d'ajuster le chemin si nécessaire
+
+class CategorieC {
+    public function listCategories() {
+        $pdo = config::getConnexion();
+
+        try {
+            $query = $pdo->prepare("SELECT * FROM categorie");
+            $query->execute();
+            
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            // Gestion des erreurs (à adapter selon votre besoin)
+            echo "Error fetching categories: " . $e->getMessage();
+            return [];
         }
     }
-    
 
+    public function getPiecesByCategoryId($id_category) {
+        $pdo = config::getConnexion();
+
+        try {
+            $query = $pdo->prepare("SELECT * FROM piecedoeuvre WHERE category = :id_category");
+            $query->bindParam(':id_category', $id_category, PDO::PARAM_INT);
+            $query->execute();
+
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            // Gérer les erreurs ici
+            return [];
+        }
+    }
+
+    public function getAllPieces() {
+        $pdo = config::getConnexion();
+
+        try {
+            $query = $pdo->prepare("SELECT * FROM piecedoeuvre");
+            $query->execute();
+
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            // Gérer les erreurs ici
+            return [];
+        }
+    }
 }
 ?>
