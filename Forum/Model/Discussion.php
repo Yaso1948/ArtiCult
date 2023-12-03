@@ -3,14 +3,14 @@
 class Discussion
 {
     private ?int $id_discussion = null;
-    private ?Commentaire $commentaire = null;
     private ?string $titre = null;
+    private ?int $id_commentaire = null;
 
-    public function __construct($id = null, Commentaire $com, $t)
+    public function __construct($id = null, $titre, $id_commentaire)
     {
         $this->id_discussion = $id;
-        $this->commentaire = $com;
-        $this->titre = $t;
+        $this->titre = $titre;
+        $this->id_commentaire = $id_commentaire;
     }
 
     public function getIdDiscussion()
@@ -18,28 +18,20 @@ class Discussion
         return $this->id_discussion;
     }
 
-    public function getCommentaire()
-    {
-        return $this->commentaire;
-    }
-
-    public function setCommentaire(Commentaire $commentaire)
-    {
-        $this->commentaire = $commentaire;
-
-        return $this;
-    }
-
     public function getTitre()
     {
         return $this->titre;
     }
 
+    public function getIdCommentaire()
+    {
+        return $this->id_commentaire;
+    }
+
     public function setTitre($titre)
     {
         $this->titre = $titre;
-
-        return $this;
+        return $this->titre;
     }
 }
 ?>

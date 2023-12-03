@@ -1,6 +1,6 @@
 <?php
 
-class config
+class config2
 {
     private static $pdo = null;
 
@@ -9,7 +9,7 @@ class config
         if (!isset(self::$pdo)) {
             try {
                 self::$pdo = new PDO(
-                    'mysql:host=localhost;dbname=Forum',
+                    'mysql:host=localhost;dbname=Utilisateur',
                     'root',
                     '',
                     [

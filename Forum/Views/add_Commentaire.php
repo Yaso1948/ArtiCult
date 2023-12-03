@@ -1,47 +1,41 @@
 <?php
 
-include '../Controller/commentaireC.php';
-include '../model/Commentaire.php';
+require_once('../Controller/commentaireC.php');
+require_once('../Model/Commentaire.php');
 
 $error = "";
 
-
-$commentaire = null;
-
-
 $commentaireC = new CommentaireC();
 
-if (
-    isset($_POST["id_commentaire"]) &&
-    isset($_POST["contenu"]) &&
-    isset($_POST["user_id"])
-) {
-    if (
-        !empty($_POST['id_commentaire']) &&
-        !empty($_POST["contenu"]) &&
-        !empty($_POST["user_id"])
-    ) {
-        $commentaire = new CommentaireC(
-            null,
-            $_POST['id_commentaire'],
-            $_POST['contenu'],
-            $_POST['user_id']
-        );
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    #$id_commentaire = $_POST['id_commentaire'] ?? null;
+    $contenu = $_POST['contenu'] ?? '';
+    $user_id = $_POST['user_id'] ?? null;
 
-        $commentaireC->addCommentaire($commentaire);
-        header('Location:list_Commentaire.php');
-    } else
-        $error = "Missing information";
+    if (!empty($contenu) && !empty($user_id)) {
+        // Validate user input if needed
+
+        $commentaire = new Commentaire(null, $contenu, $user_id);
+
+        if ($commentaireC->addCommentaire($user_id, $commentaire)) {
+            header('Location: list_Commentaire.php');
+            exit();
+        } else {
+            $error = "Failed to add comment.";
+        }
+    } else {
+        $error = "Missing or invalid information";
+    }
 }
 
-
 ?>
+
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> reclamation </title>
+    <title> Commentaire </title>
 </head>
 
 <body>
@@ -54,13 +48,6 @@ if (
 
     <form action="" method="POST">
         <table>
-            <tr>
-                <td><label for="id_commentaire">id_commentaire :</label></td>
-                <td>
-                    <input type="text" id="id_commentaire" name="id_commentaire" />
-                    <span id="erreurNom" style="color: red"></span>
-                </td>
-            </tr>
             <tr>
                 <td><label for="contenu">contenu :</label></td>
                 <td>
@@ -76,7 +63,6 @@ if (
                 </td>
             </tr>
 
-
             <td>
                 <input type="submit" value="Save">
             </td>
@@ -84,7 +70,6 @@ if (
                 <input type="reset" value="Reset">
             </td>
         </table>
-
     </form>
 </body>
 

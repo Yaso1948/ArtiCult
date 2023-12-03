@@ -7,33 +7,31 @@ $error = "";
 
 $commentaire = null;
 
+
 $commentaireC = new CommentaireC();
 
 
 if (
     isset($_POST["id_commentaire"]) &&
-    isset($_POST["user_id"]) &&
     isset($_POST["contenu"])
 ) {
     if (
         !empty($_POST['id_commentaire']) &&
-        !empty($_POST["user_id"]) &&
         !empty($_POST["contenu"])
     ) {
-        foreach ($_POST as $key => $value) {
-            echo "Key: $key, Value: $value<br>";
-        }
-        $commentaire = new CommentaireC(
-            null,
-            $_POST['id_commentaire'],
-            $_POST['user_id'],
-            $_POST['contenu']
-        );
-        var_dump($commentaire);
-        
-        $commentaireC->updateCommentaire($commentaire, $_POST['id_commentaire']);
+        $commentaire = $commentaireC->getCommentaireParUserId($_POST['id_commentaire']); // Assuming id_commentaire is used as user_id
+
+            $commentaire = new Commentaire(
+                null,
+                $_POST['id_commentaire'],
+                $commentaire['user_id'], // Assuming user_id remains the same
+                $_POST['contenu']
+            );
+
+            $commentaireC->updateCommentaire($commentaire, $_POST['id_commentaire']);
 
         header('Location:list_Commentaire.php');
+        exit();
     } else
         $error = "Missing information";
 }
@@ -51,6 +49,8 @@ if (
 
 <body>
     <button><a href="list_Commentaire.php">Back to list</a></button>
+    <center>
+        <h2 >Modification d'un commentaire</h2>
     <hr>
 
     <div id="error">
@@ -58,20 +58,12 @@ if (
     </div>
 
     <?php
-    if (isset($_POST['user_id'])) {
-        $commentaire = $commentaireC->getCommentaireParUserId($_POST['user_id']);
-        
+    if (isset($_POST['id_commentaire'])) {
+        $commentaire = $commentaireC->getCommentaireParUserId($_POST['id_commentaire']);
     ?>
-
+    
         <form action="" method="POST">
             <table>
-            <tr>
-                    <td><label for="id_commentaire">id_commentaire :</label></td>
-                    <td>
-                        <input type="titre" id="id_commentaire" name="id_commentaire" value="<?php echo $_POST['id_commentaire'] ?>" readonly />
-                        <span id="erreurid_commentaire" style="color: red"></span>
-                    </td>
-                </tr>
                 <tr>
                     <td><label for="contenu">contenu :</label></td>
                     <td>
@@ -79,23 +71,15 @@ if (
                         <span id="erreurcontenu" style="color: red"></span>
                     </td>
                 </tr>
-                <tr>
-                    <td><label for="user_id">user_id :</label></td>
-                    <td>
-                        <input type="text" id="user_id" name="user_id" value="<?php echo $comment['user_id'] ?>" />
-                        <span id="erreuruser_id" style="color: red"></span>
-                    </td>
-                </tr>
-                
-                <td>
-                    <input type="submit" value="Save">
-                </td>
-                <td>
-                    <input type="reset" value="Reset">
-                </td>
             </table>
+            <br>
+            <br>
+                    <input type="submit" value="Save">
+                    <input type="reset" value="Reset">
+                
 
         </form>
+    </center>
     <?php
     }
     ?>
