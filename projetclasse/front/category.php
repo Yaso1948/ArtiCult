@@ -4,7 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catégorie</title>
-    <!-- Styles CSS ici -->
+    <style>
+        /* Add your CSS styling here if needed */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        /* Add more styles as needed */
+    </style>
 </head>
 <body>
     <h1>Oeuvres par Catégorie</h1>
@@ -21,10 +33,10 @@
         if ($oeuvres) {
             foreach ($oeuvres as $oeuvre) {
                 echo "<div>";
-                echo "<h2>" . $oeuvre['titre'] . "</h2>";
-                echo "<p>Propriétaire: " . $oeuvre['proprietaire'] . "</p>";
-                echo "<p>Description: " . $oeuvre['description'] . "</p>";
-                // Afficher d'autres détails si nécessaire
+                echo "<h2>" . htmlspecialchars($oeuvre['titre']) . "</h2>";
+                echo "<p>Propriétaire: " . htmlspecialchars($oeuvre['proprietaire']) . "</p>";
+                echo "<p>Description: " . htmlspecialchars($oeuvre['description']) . "</p>";
+                // Add more details as needed
                 echo "</div>";
             }
         } else {
