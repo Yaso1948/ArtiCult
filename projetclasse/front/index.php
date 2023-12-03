@@ -11,28 +11,39 @@
 
     <h2>Catégories</h2>
     <ul>
-    
- 
-<?php
-require_once('../controller/categorieC.php');
-$controller = new CategorieC();
-$categories = $controller->listCategories();
+        <?php
+        require_once('../controller/categorieC.php');
+        $controller = new CategorieC();
+        $categories = $controller->listCategories();
 
-foreach ($categories as $categorie) {
-    echo "<tr>";
-    echo "<td>" . htmlspecialchars($categorie['id_categorie']) . "</td>";
-    echo "<td>" . (isset($categorie['nom']) ? htmlspecialchars($categorie['nom']) : '') . "</td>";
-    echo "<td>" . (isset($categorie['type_oeuvre']) ? htmlspecialchars($categorie['type_oeuvre']) : '') . "</td>";
+        foreach ($categories as $categorie) {
+            echo "<li>";
+            echo "ID: " . htmlspecialchars($categorie['id_categorie']) . "<br>";
+            echo "Type d'œuvre: " . (isset($categorie['type_oeuvre']) ? htmlspecialchars($categorie['type_oeuvre']) : '') . "<br>";
 
-    // Le lien pointe vers pieces_par_categorie.php sans spécifier l'id_category
-    echo "<td><a href='pieces_par_categorie.php'>Voir les pièces</a></td>";
+            // Link to view pieces in the category, passing the category ID
+            echo "<a href='pieces_par_categorie.php?id=" . htmlspecialchars($categorie['id_categorie']) . "'>Voir les pièces</a>";
 
-    echo "</tr>";
-    echo "<br>";
-}
-?>
-
-
+            echo "</li>";
+            echo "<br>";
+        }
+        ?>
     </ul>
+
+    <h2>Toutes les Œuvres</h2>
+    <?php
+    // Retrieve all pieces of artwork
+    $pieces = $controller->getAllPieces();
+
+    // Display images and titles of all pieces
+    foreach ($pieces as $piece) {
+        echo "<div>";
+        echo "<h3>" . htmlspecialchars($piece['titre']) . "</h3>";
+        echo "<img src='" . htmlspecialchars($piece['image']) . "' alt='Image de l'œuvre' width='100'><br>";
+        // Display other information about the piece if needed
+        echo "</div>";
+        echo "<br>";
+    }
+    ?>
 </body>
 </html>

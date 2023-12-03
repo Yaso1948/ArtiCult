@@ -122,7 +122,11 @@ input[type="submit"]:hover {
 
 
         <label for="category">Catégorie:</label>
-        <input type="text" name="category" required><br>
+<select name="category" required>
+    <option value="1">Peinture</option>
+    <option value="2">Sculpture</option>
+    <option value="3">Poterie</option>
+</select><br>
 
         <input type="submit" value="Add Oeuvre">
     </form>

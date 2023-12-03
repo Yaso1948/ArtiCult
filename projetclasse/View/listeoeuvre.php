@@ -112,7 +112,7 @@
                 echo "<button type='submit'>Modifier</button>";
                 echo "</form>";
                 echo "<form method='get' action='../View/recherche.php'>";
-                echo "<input type='hidden' name='id' value='" . htmlspecialchars($oeuvre['category']) . "'>";
+                echo "<input type='hidden' name='category' value='" . htmlspecialchars($oeuvre['category']) . "'>";
                 echo "<button type='submit'>Recherche</button>";
                 echo "</form>";
                 echo "</td>";
