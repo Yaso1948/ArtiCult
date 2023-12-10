@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $discussion = new Discussion(null, $titre);
 
         if ($discussionC->addDiscussion($titre)) {
-            header('Location: list_Discussion.php');
+            header('Location: index.php');
             exit();
         } else {
             $error = "Échec de l'ajout de la discussion.";
@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 
 <body>
-    <a href="list_Discussion.php">Retour à la liste des discussions</a>
+    <a href="index.php">Retour au Forum</a>
     <hr>
 
     <div id="error">

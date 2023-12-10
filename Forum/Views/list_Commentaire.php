@@ -25,7 +25,8 @@ $tab = $c->listCommentaires();
             <tr>
                 <th>id_commentaire</th>
                 <th>user_id</th>
-                <th>contenu</th>
+                <th>id_discussion</th>
+                <th width="50%" align="center">contenu</th>
                 <th>Update</th>
                 <th>Delete</th>
             </tr>
@@ -35,9 +36,10 @@ $tab = $c->listCommentaires();
                 <tr>
                     <td><?= $commentaire['id_commentaire']; ?></td>
                     <td><?= $commentaire['user_id']; ?></td>
-                    <td><?= $commentaire['contenu']; ?></td>
-                    <td align="center">
-                        <form method="POST" action="updateCommentaire.php">
+                    <td><?= $commentaire['id_discussion']; ?></td>
+                    <td align="center"><?= $commentaire['contenu']; ?></td>
+                    <td >
+                        <form method="POST" action="update_Commentaire.php">
                             <input type="submit" name="update" value="Update">
                             <input type="hidden" value="<?= $commentaire['id_commentaire']; ?>" name="id_commentaire">
                         </form>

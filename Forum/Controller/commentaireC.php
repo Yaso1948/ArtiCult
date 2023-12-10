@@ -1,7 +1,6 @@
 <?php
 
 require_once('../config.php');
-require_once('../config2.php');
 
 class CommentaireC {
 
@@ -34,6 +33,37 @@ class CommentaireC {
         }
     }
 
+
+    public function getCommentaireById($id_commentaire) {
+        try {
+            $query = $this->pdo->prepare("SELECT * FROM Commentaire WHERE id_commentaire = :id_commentaire");
+            $query->bindParam(':id_commentaire', $id_commentaire, PDO::PARAM_INT);
+            $query->execute();
+
+            return $query->fetch(PDO::FETCH_ASSOC); // Use fetch instead of fetchAll to get a single row
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lors de la récupération du commentaire par utilisateur: " . $e->getMessage());
+        }
+    }
+
+    public function getCommentairesByIdDiscussion($id_discussion) {
+
+        $comments = array();
+
+        // Assuming 'discussions' is the table name for discussions
+        // and 'commentaires' is the table name for comments
+        $query = $this->pdo->prepare("SELECT * FROM Commentaire 
+                  WHERE id_discussion = :id_discussion");
+        $query->bindParam(':id_discussion', $id_discussion, PDO::PARAM_INT);
+
+        if ($query->execute()) {
+            // Fetch all comments for the discussion
+            $comments = $query->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        return $comments;
+    }
+
     public function deleteCommentaire($id_commentaire) {
         try {
             $query = $this->pdo->prepare("DELETE FROM Commentaire WHERE id_commentaire = :id_commentaire");
@@ -48,9 +78,10 @@ class CommentaireC {
 
     public function addCommentaire($user_id, $commentaire) {
         try {
-            $query = $this->pdo->prepare("INSERT INTO Commentaire (user_id, contenu) VALUES (:user_id, :contenu)");
+            $query = $this->pdo->prepare("INSERT INTO Commentaire (user_id, contenu, id_discussion) VALUES (:user_id, :contenu, :id_discussion)");
             $query->bindParam(':user_id', $user_id, PDO::PARAM_INT);
             $query->bindParam(':contenu', $commentaire->getContenu(), PDO::PARAM_STR);
+            $query->bindParam(':id_discussion', $commentaire->getIdDiscussion(), PDO::PARAM_INT);
             $query->execute();
 
             return true;

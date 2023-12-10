@@ -25,7 +25,6 @@ $discussions = $discussionC->listDiscussions();
             <tr>
                 <th>id_discussion</th>
                 <th>titre</th>
-                <th>id_commentaire</th>
                 <th>Update</th>
                 <th>Delete</th>
             </tr>
@@ -33,9 +32,8 @@ $discussions = $discussionC->listDiscussions();
         <body>
             <?php foreach ($discussions as $discussion) : ?>
                 <tr>
-                    <td><?= $discussion['id_discussion']; ?></td>
-                    <td><?= $discussion['titre']; ?></td>
-                    <td><?= $discussion['id_commentaire']; ?></td>
+                    <td align="center"><?= $discussion['id_discussion']; ?></td>
+                    <td align="center"><?= $discussion['titre']; ?></td>
                     <td align="center">
                         <form method="POST" action="update_Discussion.php">
                             <input type="submit" name="update" value="Update">

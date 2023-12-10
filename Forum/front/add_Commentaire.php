@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $commentaire = new Commentaire(null, $contenu, $user_id, $id_discussion);
 
         if ($commentaireC->addCommentaire($user_id, $commentaire)) {
-            header('Location: list_Commentaire.php');
+            header('Location: index.php');
             exit();
         } else {
             $error = "Failed to add comment.";
@@ -39,11 +39,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 
 <body>
-    <a href="list_Commentaire.php">Back to list </a>
+    <a href="index.php">Back to Forum </a>
     <hr>
 
     <div id="error">
-        <?php echo $error; ?>
+        <?php $error; ?>
     </div>
 
     <form action="" method="POST">
